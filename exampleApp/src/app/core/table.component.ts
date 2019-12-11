@@ -1,7 +1,8 @@
-import { SharedState, MODES } from "./sharedState.model";
+import { SharedState, MODES, SHARED_STATE } from "./sharedState.model";
 import { Model } from "../model/repository.model";
 import { Product } from "../model/product.model";
-import { Component } from "@angular/core";
+import { Component, Inject } from "@angular/core";
+import { Observer } from "rxjs";
 
 
 @Component({
@@ -10,8 +11,17 @@ import { Component } from "@angular/core";
 })
 export class TableComponent {
 
-  constructor(private model: Model, private state: SharedState) {}
+  constructor(private model: Model, 
+    @Inject(SHARED_STATE) private observer: Observer<SharedState>) {}
+    
+  editProduct(key: number) {
+    this.observer.next(new SharedState(MODES.EDIT, key));
+  }
 
+  createProduct() {
+    this.observer.next(new SharedState(MODES.CREATE));
+  }
+  
   getProduct(key: number): Product {
     return this.model.getProduct(key);
   }
@@ -24,13 +34,4 @@ export class TableComponent {
     this.model.deleteProduct(key);
   }
 
-  editProduct(key: number) {
-    this.state.id = key;
-    this.state.mode = MODES.EDIT;
-  }
-
-  createProduct() {
-    this.state.id = undefined;
-    this.state.mode = MODES.CREATE;
-  }
 }

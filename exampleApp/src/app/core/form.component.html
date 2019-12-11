@@ -5,6 +5,7 @@
   <h5>
     {{editing ? "Edit" : "Create"}} Product
   </h5>
+  Last Event: {{stateEvents | async | formatState}}
 </div>
 
 <form
