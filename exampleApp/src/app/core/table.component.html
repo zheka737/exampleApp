@@ -16,11 +16,26 @@
       {{item.price | currency:"USD" }}
     </td>
     <td style="text-align: center;">
-      <button class="btn btn-danger btn-sm" (click)="deleteProduct(item.id)">Delete</button>
-      <button class="btn btn-warning btn-sm" (click)="editProduct(item.id)">Edit</button>
+      <button
+        class="btn btn-danger btn-sm"
+        (click)="deleteProduct(item.id)"
+      >Delete</button>
+      <button
+        class="btn btn-warning btn-sm"
+        (click)="editProduct(item.id)"
+      >Edit</button>
     </td>
   </tr>
 </table>
-<button class="btn btn-primary m-1" (click)="createProduct()">
+<button
+  class="btn btn-primary m-1"
+  (click)="createProduct()"
+>
   Create New Product
+</button>
+<button
+  class="btn btn-danger"
+  (click)="deleteProduct(-1)"
+>
+  Generate HTTP Error
 </button>

@@ -1,6 +1,7 @@
-import { Message } from "@angular/compiler/src/i18n/i18n_ast";
+
 import { Injectable } from "@angular/core";
 import { Subject, Observable } from "rxjs";
+import { Message } from "./message.model";
 
 
 @Injectable()
