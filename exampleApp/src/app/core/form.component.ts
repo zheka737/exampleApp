@@ -6,6 +6,7 @@ import { NgForm } from '@angular/forms';
 import { Observable } from "rxjs";
 import { e } from "@angular/core/src/render3";
 import { filter, map, distinctUntilChanged } from "rxjs/operators";
+import { ActivatedRoute, Router } from "@angular/router";
 
 
 @Component({
@@ -18,18 +19,16 @@ export class FormComponent {
   //lastId: number;
 
   constructor(private model: Model,
-    @Inject(SHARED_STATE) private stateEvents: Observable<SharedState>) {
-    stateEvents
-      // .pipe(distinctUntilChanged((firstState, secondState) =>
-      //   firstState.mode == secondState.mode
-      //   && firstState.id == secondState.id))
-      .subscribe(update => {
-        this.product = new Product();
-        if (update.id != undefined) {
-          Object.assign(this.product, this.model.getProduct(update.id));
-        }
-        this.editing = update.mode == MODES.EDIT;
-      });
+    activeRoute: ActivatedRoute,
+    private router: Router) {
+    activeRoute.params.subscribe(params => {
+      this.editing = params["mode"] == 'edit';
+      let id = params["id"];
+
+      if(id != null){
+        Object.assign(this.product, model.getProduct(id) || new Product())
+      }
+    })
   }
 
 
@@ -38,8 +37,7 @@ export class FormComponent {
   submitForm(form: NgForm) {
     if (form.valid) {
       this.model.saveProduct(this.product);
-      this.product = new Product();
-      form.reset();
+      this.router.navigateByUrl("/");
     }
   }
 

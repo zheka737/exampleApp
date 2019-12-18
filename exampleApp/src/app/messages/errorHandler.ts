@@ -1,8 +1,8 @@
-import { ErrorHandler, NgZone } from "@angular/core";
+import { ErrorHandler, NgZone, Injectable } from "@angular/core";
 import { MessageService } from "./message.service";
 import { Message } from "./message.model";
 
-
+@Injectable()
 export class MessageErrorHandler implements ErrorHandler {
 
   constructor(private messageService: MessageService, private ngZone: NgZone){}
