@@ -14,11 +14,12 @@ import { RouterModule } from "@angular/router";
 import { NotFoundComponent } from "./notFound.component";
 import { ProductCountComponent } from "./productCount.component";
 import { CategoryCountComponent } from "./categoryCount.component";
+import { UnsavedGuard } from "./unsaved.guard";
 
 @NgModule({
   imports: [BrowserModule, FormsModule, ModelModule, RouterModule],
   declarations: [TableComponent, FormComponent, StatePipe,
     ProductCountComponent, CategoryCountComponent, NotFoundComponent],
   exports: [ModelModule, TableComponent, FormComponent],
-  providers: []})
+  providers: [UnsavedGuard]})
 export class CoreModule {}

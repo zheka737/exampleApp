@@ -2,10 +2,11 @@ import { Injectable } from "@angular/core";
 import { Product } from "./product.model";
 import { StaticDataSource } from "./static.datasource";
 import { RestDataSource } from "./rest.datasourse";
+import { delay } from "rxjs/operators";
 
 @Injectable()
 export class Model {
-  private products: Product[];
+  private products: Product[] = [];
   private locator = (p: Product, id: number) => p.id == id;
 
   constructor(private dataSource: RestDataSource) {

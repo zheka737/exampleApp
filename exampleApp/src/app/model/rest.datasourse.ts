@@ -2,7 +2,8 @@ import { InjectionToken, Injectable, Inject } from "@angular/core";
 import { Observable, throwError } from "rxjs";
 import { Product } from "./product.model";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { catchError } from "rxjs/operators";
+import { catchError, delay } from "rxjs/operators";
+
 
 export const REST_URL = new InjectionToken("rest_url");
 
@@ -14,8 +15,9 @@ export class RestDataSource {
   ) {}
 
   getData(): Observable<Product[]> {
-    return this.http.jsonp<Product[]>(this.url, 'callback');
-  }
+    return this.sendRequest<Product[]>("GET", this.url);
+    }
+    
   saveProduct(product: Product): Observable<Product> {
     return this.sendRequest<Product>("POST", this.url, product);
   }
@@ -41,6 +43,7 @@ export class RestDataSource {
         "Access-Key": "<secret>",
         "Application-Name": "exampleApp"
       })
-    }).pipe(catchError((error: Response) => throwError(`Network Error: ${error.statusText} ${error.status}`)));
+    })
+    .pipe(catchError((error: Response) => throwError(`Network Error: ${error.statusText} ${error.status}`)));
   }
 }
