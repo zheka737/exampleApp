@@ -11,11 +11,14 @@ import { routing } from "./app.routing";
 import { AppComponent } from "./app.component";
 import { TermsGuard } from "./terms.guard";
 import { LoadGuard } from "./load.guard";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+
 
 @NgModule({
-  imports: [BrowserModule, ModelModule, CoreModule, MessageModule, routing],
+  imports: [BrowserModule, ModelModule, CoreModule,
+    MessageModule, routing, BrowserAnimationsModule],
   declarations: [AppComponent],
   bootstrap: [AppComponent],
   providers: [TermsGuard, LoadGuard]
 })
-export class AppModule {}
+export class AppModule { }
